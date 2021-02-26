@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="home">Home</string>
+    <string name="report">Home</string>
+    <string name="calender">Home</string>
+    <string name="setting">Home</string>
+
+    <string name="latitudeBabel">Latitude</string>
+    <string name="longitudeBabel">Longitude</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="city">
+
+        <item>Noida</item>
+        <item>Mumbai</item>
+        <item>Delhi</item>
+    </string-array>
+</resources>

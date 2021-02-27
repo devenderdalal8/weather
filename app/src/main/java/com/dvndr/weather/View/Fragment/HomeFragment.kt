@@ -16,8 +16,6 @@ import com.dvndr.weather.R
 import retrofit2.Call
 import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val mName = "name"
 private const val mLatitude = "lat"
 private const val mLongitude = "long"
@@ -76,7 +74,7 @@ class HomeFragment : Fragment() {
      fun callApichecked() {
          val key = "e3d620dc102aa9ddb00c872c54deb990"
          val data = DataFactory.dataInterface.getDataUsingLatLong(lat=  getLatitude.toString(),
-            lon = getLongitude.toString(), apiid = key)
+             lon = getLongitude.toString(), apiid = key)
 
          data.enqueue(object : retrofit2.Callback<HomeData> {
              @SuppressLint("SetTextI18n")
@@ -87,13 +85,10 @@ class HomeFragment : Fragment() {
                  {
                      val tempString : Float? = data?.main?.temp
                      val tempFloat : Float? = tempString
-                     if (getValue == true) {
-                         val a: Float? = (tempFloat?.plus(273.15))?.toFloat()
-                         temp?.text = a.toString()+"  °F"
-                     } else {
-                         val a: Float? = (tempFloat?.minus(273.15))?.toFloat()
-                         temp?.text = a.toString() +" °C"
-                     }
+                     val a: Float? = (tempFloat?.minus(273.15))?.toFloat()
+                     val b: Float? = (a?.times((9/5))?.plus(32))
+                     temp?.text = b.toString()+"  °F"
+
                      condition?.text = data?.weather?.get(0)?.main.toString()
                      humidity?.text = data?.main?.humidity.toString() + "  air g.kg-1"
                      location?.text = data?.name.toString()
@@ -116,23 +111,16 @@ class HomeFragment : Fragment() {
                  @SuppressLint("SetTextI18n")
                  override fun onResponse(call: Call<HomeData>, response: Response<HomeData>) {
                      Log.d("fail" , response.toString())
-                     var data = response.body()
-                     if(response!= null)
-                     {
-                         val tempString : Float? = data?.main?.temp
-                         val tempFloat : Float? = tempString
-                         if (getValue == false) {
-                             val a: Float? = (tempFloat?.plus(273.15))?.toFloat()
-                             temp?.text = a.toString()+"  °F"
-                         } else {
-                             val a: Float? = (tempFloat?.minus(273.15))?.toFloat()
-                             temp?.text = a.toString() +" °C"
-                         }
-                         condition?.text = data?.weather?.get(0)?.main.toString()
-                         humidity?.text = data?.main?.humidity.toString() + "  air g.kg-1"
-                         location?.text = data?.name.toString()
-                         speed?.text = data?.wind?.speed.toString() + "  km/h"
-                     }
+                     val data = response.body()
+                     val tempString : Float? = data?.main?.temp
+                     val tempFloat : Float? = tempString
+                     val a: Float? = (tempFloat?.minus(273.15))?.toFloat()
+                     temp?.text = a.toString() +" °C"
+
+                     condition?.text = data?.weather?.get(0)?.main.toString()
+                     humidity?.text = data?.main?.humidity.toString() + "  air g.kg-1"
+                     location?.text = data?.name.toString()
+                     speed?.text = data?.wind?.speed.toString() + "  km/h"
                  }
 
                  override fun onFailure(call: Call<HomeData>, t: Throwable) {

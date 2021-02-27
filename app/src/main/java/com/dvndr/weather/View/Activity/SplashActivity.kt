@@ -30,7 +30,6 @@ class SplashActivity : AppCompatActivity() , LocationListener {
      lateinit var progressBar: ProgressBar
      private val locationPermissionCode = 2
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

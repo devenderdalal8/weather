@@ -3,6 +3,7 @@ package com.dvndr.weather.View.Fragment
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,16 @@ class SettingFragment : Fragment() {
     var editor: SharedPreferences.Editor? = null
     var check : Boolean = false
     lateinit var switch:SwitchCompat
+    val DEFAULT : Boolean = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            getName = it.getString(mName)
+            getValue = it.getBoolean(mValue)
+        }
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_setting, container, false)
@@ -55,22 +66,15 @@ class SettingFragment : Fragment() {
         }
         else
         {
-            switch.isChecked = getValue
+            val value = savedInstanceState.getBoolean("switch" )
+            Log.d("value" , value.toString())
+            switch.isChecked = value
         }
         return view
-
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            getName = it.getString(mName)
-            getValue = it.getBoolean(mValue)
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean("switch" , switch.showText)
+        outState.putBoolean("switch" , switch.isChecked)
         super.onSaveInstanceState(outState)
     }
 
@@ -80,7 +84,6 @@ class SettingFragment : Fragment() {
             SettingFragment().apply {
                 arguments = Bundle().apply {
                     putString(mName, Name)
-
 
                 }
             }

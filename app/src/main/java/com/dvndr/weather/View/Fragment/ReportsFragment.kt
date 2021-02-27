@@ -16,12 +16,11 @@ import com.dvndr.weather.R
 import retrofit2.Call
 import retrofit2.Response
 
-//
+
 private  const val mName = "name"
 private const val mLatitude = "lat"
 private const val mLongitude = "long"
 private const val mValue = "value"
-
 
 class ReportFragment : Fragment() {
 
@@ -33,7 +32,6 @@ class ReportFragment : Fragment() {
     var location: TextView? = null
     var recyclerView: RecyclerView? = null
     lateinit var adapter: ReportAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +45,10 @@ class ReportFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view  = inflater.inflate(R.layout.fragment_report, container, false)
-
         recyclerView = view.findViewById(R.id.recyclerView)
         name = view.findViewById(R.id.name)
         location = view.findViewById(R.id.location)
-
         name?.text = getName
-
         getReportData()
         return view
     }
@@ -67,16 +62,13 @@ class ReportFragment : Fragment() {
             Response<ReportData>) {
                 val data = response.body()
                 val dataArray : ArrayList<ReportData?> = arrayListOf(data)
-//                name?.text= dataArray.toString(
 
                 adapter = ReportAdapter(context ?: return, dataArray)
                 recyclerView?.adapter = adapter
                 recyclerView?.layoutManager = LinearLayoutManager(context)
 
             }
-
             override fun onFailure(call: Call<ReportData>, t: Throwable) {
-                Log.d("failed"," hello "+t.toString())
 
             }
         })
